@@ -11,4 +11,4 @@ The current automated baseline has 32 active A+B test methods.
 
 ## SUT boundary
 
-The tests use the real selected production classes from the thesis system at `/home/zjc/waybill-crosschain-platform` in WSL Ubuntu 22.04. The thesis source is not copied into or modified by this repository. See [`sut/README.md`](sut/README.md) for the exact boundary and [`tests/README.md`](tests/README.md) for execution details.
+The tests use a selected production-code snapshot under [`sut/`](sut/), copied from the thesis system without modifying the original source. See [`sut/README.md`](sut/README.md) for the exact boundary and [`tests/README.md`](tests/README.md) for execution details.

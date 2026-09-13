@@ -1,6 +1,14 @@
 # Module 1 System Under Test Scope
 
-The system under test is the current thesis system at `/home/zjc/waybill-crosschain-platform` in WSL Ubuntu 22.04. The source project remains outside this repository and is not modified by the test project.
+This directory contains the selected system-under-test source snapshot for the current A+B test batch. The snapshot was copied from `/home/zjc/waybill-crosschain-platform/backend/src/main/java` in WSL Ubuntu 22.04; the original thesis source remains outside this repository and was not modified.
+
+The Maven test project compiles `src/main/java` here directly, so the repository no longer depends on the external thesis path for its baseline tests.
+
+Snapshot record:
+
+- Source commit observed: `9c2de4f` (`Finalize real Fabric delivery path`)
+- Snapshot date: 2026-09-13
+- Snapshot size: 51 Java source files
 
 ## Functional slices
 
@@ -31,4 +39,6 @@ The active B scope focuses on precheck decisions, task creation, successful exec
 
 ## Scope boundary
 
-Frontend display details, full Fabric network deployment, database administration, and unrelated business flows are outside the module-one SUT scope. The test project may compile against the backend artifact so that the selected slices use their real production classes; this dependency choice does not expand the functional test scope.
+Frontend display details, full Fabric network deployment, database administration, and unrelated business flows are outside the module-one SUT scope. The selected snapshot is used only to make the A+B baseline reproducible; it does not expand the functional test scope.
+
+The snapshot is intentionally limited to the A+B production classes and their compile-time support types. It is not a copy of the full backend. When the thesis source changes, refresh this snapshot deliberately and record the source commit and date here.

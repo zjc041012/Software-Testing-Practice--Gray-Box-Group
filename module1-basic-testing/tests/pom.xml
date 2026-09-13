@@ -12,17 +12,9 @@
         <java.version>17</java.version>
         <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <sut.jar>/home/zjc/waybill-crosschain-platform/backend/target/waybill-crosschain-backend-1.0.0.jar.original</sut.jar>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>waybill-crosschain-backend</artifactId>
-            <version>1.0.0</version>
-            <scope>system</scope>
-            <systemPath>${sut.jar}</systemPath>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -78,6 +70,7 @@
     </dependencies>
 
     <build>
+        <sourceDirectory>${project.basedir}/../sut/src/main/java</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
