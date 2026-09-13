@@ -24,3 +24,9 @@ The default `SUT_ROOT` is `$HOME/waybill-crosschain-platform` in WSL Ubuntu 22.0
 The current active test batch covers JWT issue and validation, authentication service decisions, role access control, cross-chain precheck and task state transitions, execution failure handling, and retry idempotency. Fabric is mocked at the service boundary where external network access is not required.
 
 The file-upload and AES/SHA-256 tests currently present in the source tree are exploratory material for the deferred B scope; they are not counted as the current A+C delivery boundary.
+
+The default runner executes only the active A+C set. To include the deferred B exploratory tests for diagnosis, run:
+
+```bash
+RUN_ALL=1 bash run-tests.sh
+```
