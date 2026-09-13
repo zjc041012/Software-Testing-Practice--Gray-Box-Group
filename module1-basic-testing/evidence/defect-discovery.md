@@ -1,16 +1,16 @@
-# A+B 缺陷发现记录
+# 模块一缺陷发现记录
 
 日期：2026-09-13  
-测试人：ZhuJiacheng  
+测试人：ZhuJiacheng；D-003：ZhangYang
 被测对象：`module1-basic-testing/sut/` 选定生产代码快照
 
-本记录只保存已复现的缺陷候选，不代表已经修复或关闭。探测用例使用 JUnit 5、Mockito 和 Mock Fabric Gateway；默认 A+B 回归集不包含这些故意失败的探测断言。
+本记录保存已复现的缺陷，不代表已经修复或关闭。探测用例使用 JUnit 5、Mockito 和 Mock Fabric Gateway；默认回归集不包含这些故意失败的探测断言。
 
 ## D-001 跨链目标链失败仍被确认
 
 - 模块：B 跨链任务状态控制
 - 关联逻辑：`CrossChainService.execute`
-- 前置条件：任务为 CREATED，源链运单存在，目标链 Gateway 返回 `targetTxId`、`status=FAILED` 和失败原因。
+- 前置条件：任务为 CREATED，源链运单存在，Mock Fabric Gateway 返回 `targetTxId`、`status=FAILED` 和失败原因。
 - 复现：执行跨链任务。
 - 预期：任务进入 FAILED，保留目标链失败原因，不得进入 CONFIRMED。
 - 实际：任务进入 CONFIRMED，回执状态为 FAILED。
@@ -28,9 +28,10 @@
 
 ## D-003 文件哈希为空仍通过跨链前置检查
 
+- 测试人：ZhangYang
 - 模块：B 跨链任务状态控制
 - 关联逻辑：`CrossChainService.precheck`
-- 前置条件：MySQL 中存在运单和文件记录，源链记录存在，但文件 `fileHash` 和 `encryptedFileHash` 均为空。
+- 前置条件：Mock Repository 返回运单和文件记录，源链记录存在，但文件 `fileHash` 和 `encryptedFileHash` 均为空。
 - 复现：执行跨链前置检查。
 - 预期：`文件哈希已生成` 检查失败，整体 precheck 失败。
 - 实际：只判断文件对象存在，整体 precheck 通过。
@@ -38,4 +39,4 @@
 
 ## 当前状态
 
-三个缺陷均已复现，尚未修复、回归或关闭。修复阶段需要明确是否同步修改 WSL 中的原毕设源代码；当前仓库中的 SUT 快照和测试工程未自动修改原系统。
+三个缺陷均已复现，尚未修复、回归或关闭。本轮不修改 WSL 中的原毕设源代码。
