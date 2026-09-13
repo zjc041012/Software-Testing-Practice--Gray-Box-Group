@@ -14,7 +14,7 @@
 - 复现：执行跨链任务。
 - 预期：任务进入 FAILED，保留目标链失败原因，不得进入 CONFIRMED。
 - 实际：任务进入 CONFIRMED，回执状态为 FAILED。
-- 证据：定向探测结果 `expected: FAILED but was: CONFIRMED`。
+- 证据：[D-001 原始运行日志](defect-probes/D-001.log)：`actualTaskStatus=CONFIRMED actualReceiptStatus=FAILED`，断言期望 FAILED，实际为 CONFIRMED。
 
 ## D-002 JWT 过期边界被接受
 
@@ -24,7 +24,7 @@
 - 复现：在过期秒内立即解析 Token。
 - 预期：Token 已到期，应返回空 Optional。
 - 实际：Token 被解析为有效身份。
-- 证据：定向探测结果 `Expecting value to be false but was true`。
+- 证据：[D-002 原始运行日志](defect-probes/D-002.log)：`actualTokenAccepted=true`，断言期望 false。
 
 ## D-003 文件哈希为空仍通过跨链前置检查
 
@@ -35,8 +35,8 @@
 - 复现：执行跨链前置检查。
 - 预期：`文件哈希已生成` 检查失败，整体 precheck 失败。
 - 实际：只判断文件对象存在，整体 precheck 通过。
-- 证据：定向探测结果 `Expecting value to be false but was true`。
+- 证据：[D-003 原始运行日志](defect-probes/D-003.log)：`actualHashCheckPassed=true overallPassed=true`，断言期望 false。
 
 ## 当前状态
 
-三个缺陷均已复现，尚未修复、回归或关闭。本轮不修改 WSL 中的原毕设源代码。
+三个缺陷均已复现，尚未修复、回归或关闭。常规测试执行结果见[32 条测试通过日志](baseline-32.log)；定向探测与常规测试分开运行，故意失败的断言不计入常规测试通过率。本轮不修改 WSL 中的原毕设源代码。

@@ -18,6 +18,26 @@ The selected SUT source snapshot is stored in `../sut/src/main/java`. It was cop
 bash run-tests.sh
 ```
 
-Test reports are written to `target/surefire-reports/`. To refresh the snapshot later, copy only the selected A+B production files from the thesis backend and record the source commit in `sut/README.md`; do not edit the thesis source through this project.
+Test reports are written to `target/surefire-reports/`. To refresh the snapshot later, copy only the selected production files from the thesis backend and record the source commit in `sut/README.md`; do not edit the thesis source through this project.
 
 The current active test batch covers JWT issue and validation, authentication service decisions, role access control, cross-chain precheck and task state transitions, execution failure handling, verification decisions, and retry idempotency. Fabric is mocked at the service boundary where external network access is not required.
+
+## Reproduce the three open defects
+
+The intentionally failing probes live in `src/defect-probes/java`. The `defect-probes` Maven profile selects that directory instead of the regular test sources, so `bash run-tests.sh` and plain `mvn clean test` keep running the 32 regular tests.
+
+Run one probe at a time from this directory:
+
+```bash
+bash ./run-defect-probe.sh D-001
+bash ./run-defect-probe.sh D-002
+bash ./run-defect-probe.sh D-003
+```
+
+Each script run prints the test name and assertion failure, verifies that the failure is the expected defect rather than a build error, and saves the raw Maven output to `../evidence/defect-probes/D-00X.log`. An expected defect failure makes the script exit successfully. These probes use Mockito and do not modify the thesis source, MySQL, or a Fabric network.
+
+From Windows PowerShell, use this form (replace the final defect ID as needed):
+
+```powershell
+wsl.exe -d Ubuntu-22.04 -- bash -lc "cd /mnt/c/Projects/Software-Testing-Practice--Gray-Box-Group/module1-basic-testing/tests && bash ./run-defect-probe.sh D-001"
+```
