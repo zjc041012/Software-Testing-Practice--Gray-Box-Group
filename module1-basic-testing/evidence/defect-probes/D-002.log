@@ -30,9 +30,9 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running com.example.waybill.security.D002JwtExpiryProbeTest
-D-002 issuedSecond=1789299009 actualTokenAccepted=true
-[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.547 s <<< FAILURE! -- in com.example.waybill.security.D002JwtExpiryProbeTest
-[ERROR] com.example.waybill.security.D002JwtExpiryProbeTest.tokenAtItsExpirationSecondMustBeRejected -- Time elapsed: 0.481 s <<< FAILURE!
+D-002 issuedSecond=1789299405 actualTokenAccepted=true
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.471 s <<< FAILURE! -- in com.example.waybill.security.D002JwtExpiryProbeTest
+[ERROR] com.example.waybill.security.D002JwtExpiryProbeTest.tokenAtItsExpirationSecondMustBeRejected -- Time elapsed: 0.410 s <<< FAILURE!
 org.opentest4j.AssertionFailedError: 
 [D-002 token must be rejected at its expiration second] 
 Expecting value to be false but was true
@@ -57,8 +57,8 @@ Expecting value to be false but was true
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  20.198 s
-[INFO] Finished at: 2026-09-13T19:30:09+08:00
+[INFO] Total time:  19.102 s
+[INFO] Finished at: 2026-09-13T19:36:45+08:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.0:test (default-test) on project module1-basic-testing: There are test failures.
 [ERROR] 

@@ -46,5 +46,15 @@ if ! grep -Fq 'Tests run: 1, Failures: 1, Errors: 0' "$LOG_FILE"; then
   exit 1
 fi
 
+OBSERVATION=$(grep -m1 "^$PROBE_ID " "$LOG_FILE")
+SUMMARY=$(grep -F 'Tests run: 1, Failures: 1, Errors: 0' "$LOG_FILE" | tail -n 1)
+if [[ -z "$OBSERVATION" || -z "$SUMMARY" ]]; then
+  echo "探测无效：缺少可核验的实际观察值或测试汇总。" >&2
+  exit 1
+fi
+
+echo "截图摘要："
+echo "$OBSERVATION"
+echo "$SUMMARY"
 echo "EXPECTED_FAILURE_REPRODUCED=$PROBE_ID"
 echo "原始日志：$LOG_FILE"

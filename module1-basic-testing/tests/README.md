@@ -36,6 +36,8 @@ bash ./run-defect-probe.sh D-003
 
 Each script run prints the test name and assertion failure, verifies that the failure is the expected defect rather than a build error, and saves the raw Maven output to `../evidence/defect-probes/D-00X.log`. An expected defect failure makes the script exit successfully. These probes use Mockito and do not modify the thesis source, MySQL, or a Fabric network.
 
+For a terminal screenshot, capture the final `截图摘要` block: it shows the observed value, `Tests run: 1, Failures: 1, Errors: 0`, and `EXPECTED_FAILURE_REPRODUCED`. In Windows, press `Win+Shift+S` and select that block. Keep the original `.log` file as the verifiable evidence; `BUILD FAILURE` in these optional runs is the intentionally failing defect assertion.
+
 From Windows PowerShell, use this form (replace the final defect ID as needed):
 
 ```powershell

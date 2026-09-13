@@ -32,8 +32,8 @@
 [INFO] Running com.example.waybill.service.D003BlankHashProbeTest
 OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
 D-003 actualHashCheckPassed=true overallPassed=true
-[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 5.896 s <<< FAILURE! -- in com.example.waybill.service.D003BlankHashProbeTest
-[ERROR] com.example.waybill.service.D003BlankHashProbeTest.blankFileHashesMustFailPrecheck -- Time elapsed: 0.558 s <<< FAILURE!
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 3.918 s <<< FAILURE! -- in com.example.waybill.service.D003BlankHashProbeTest
+[ERROR] com.example.waybill.service.D003BlankHashProbeTest.blankFileHashesMustFailPrecheck -- Time elapsed: 0.551 s <<< FAILURE!
 org.opentest4j.AssertionFailedError: 
 [D-003 blank file hashes must fail the hash check] 
 Expecting value to be false but was true
@@ -58,8 +58,8 @@ Expecting value to be false but was true
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  24.914 s
-[INFO] Finished at: 2026-09-13T19:30:40+08:00
+[INFO] Total time:  23.825 s
+[INFO] Finished at: 2026-09-13T19:37:10+08:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.0:test (default-test) on project module1-basic-testing: There are test failures.
 [ERROR] 
