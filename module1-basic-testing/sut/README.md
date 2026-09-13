@@ -17,20 +17,7 @@ This is an active scope for the current test batch.
 
 Required DTOs, entities, repositories, and Spring Security configuration are included only as supporting dependencies for this slice.
 
-### B Electronic credential upload and integrity verification
-
-This is deferred for the current batch because its end-to-end setup spans local files, encryption metadata, database persistence, and the Fabric boundary. The exploratory test sources may remain in the test project, but B is not counted as a current delivery target.
-
-- `FileController`
-- `WaybillController` file verification endpoint
-- `FileStorageService`
-- `HashUtils`
-- `CryptoUtils`
-- `FabricGateway` with `MockFabricGateway` at the external-ledger boundary
-
-The slice verifies plaintext SHA-256, AES-256-GCM encryption, ciphertext storage, digest persistence, original-file verification, and tampered-file rejection.
-
-### C Cross-chain task state control
+### B Cross-chain task state control
 
 This is an active scope for the current test batch.
 
@@ -40,7 +27,7 @@ This is an active scope for the current test batch.
 - `CrossChainTaskStatus`
 - `MockFabricGateway`
 
-The active C scope focuses on precheck decisions, task creation, successful execution, failure transition, and retry idempotency. Full Fabric-network deployment remains outside the current unit-test baseline.
+The active B scope focuses on precheck decisions, task creation, successful execution, failure transition, verification decisions, and retry idempotency. Full Fabric-network deployment remains outside the current unit-test baseline.
 
 ## Scope boundary
 

@@ -5,10 +5,9 @@ This module contains the basic software testing practice materials and implement
 ## Current scope
 
 - A: login, JWT issuing/parsing, bearer-token filtering, and role-based access control.
-- C: cross-chain precheck, task creation, execution state transitions, failure handling, verification decisions, and retry idempotency.
-- B: file upload, encryption, and integrity verification are retained as exploratory material but deferred from the current delivery batch.
+- B: cross-chain precheck, task creation, execution state transitions, failure handling, verification decisions, and retry idempotency.
 
-The current automated baseline has 32 active A+C test methods. The separate B exploratory tests remain runnable for diagnostic purposes and are not counted in the A+C scope.
+The current automated baseline has 32 active A+B test methods.
 
 ## SUT boundary
 

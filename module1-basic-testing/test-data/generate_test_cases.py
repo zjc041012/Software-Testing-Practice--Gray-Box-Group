@@ -64,15 +64,15 @@ def cases() -> list[dict[str, str]]:
         make_case("A-021", "访问控制", "无有效授权的他人不能下载文件", "High", "用户不是上传者，用户/组织/角色均无 ACTIVE 授权", "其他用户下载文件", "调用 canDownload", "返回 false", "等价类"),
         make_case("A-022", "访问控制", "授权目标角色按白名单校验", "Medium", "访问控制服务可用", "CONSIGNEE、CUSTOMS、FORWARDER、CARRIER", "逐个调用 requireAllowedGrantTarget", "前三者通过，CARRIER 被拒绝", "等价类"),
         make_case("A-023", "访问控制", "跨链操作角色校验", "High", "访问控制服务可用", "ADMIN、CROSS_CHAIN_GATEWAY、CONSIGNOR", "逐个调用 requireCrossChainOperator", "前两者通过，CONSIGNOR 被拒绝", "等价类"),
-        make_case("C-001", "跨链-前置检查", "源链与目标链相同被拒绝", "High", "跨链操作用户已认证", "source=CHINA，target=CHINA", "调用 precheck", "结果 passed=false，包含源链和目标链失败项", "边界值"),
-        make_case("C-002", "跨链-前置检查", "已过期共享请求被拒绝", "High", "运单、文件、源链记录均存在", "expiresAt=当前时间之前", "调用 precheck", "结果 passed=false，有效期合法项失败", "边界值"),
-        make_case("C-003", "跨链-前置检查", "依赖完整且有效期未来时检查通过", "High", "MySQL 运单、文件摘要、源链存证均存在，源链匹配", "source=CHINA，target=EUROPE，expiresAt=未来", "调用 precheck", "8 个检查项全部通过", "场景法"),
-        make_case("C-004", "跨链-任务创建", "前置检查通过后创建 CREATED 任务", "High", "跨链前置检查全部通过，当前用户 id=7", "WB-001，CHINA -> EUROPE，有效期未来", "调用 create", "保存带 CCT-/XCC- 标识、createdBy=7、状态 CREATED 的任务", "场景法"),
-        make_case("C-005", "跨链-任务创建", "前置检查失败时不创建任务", "High", "运单存在但文件和源链记录缺失", "WB-001，CHINA -> EUROPE", "调用 create", "抛出前置检查未通过异常，仓储不保存任务", "等价类"),
-        make_case("C-006", "跨链-执行", "跨链成功执行并确认目标链回执", "High", "任务为 CREATED，源链记录存在，目标链 Mock 返回成功回执", "目标 tx=europe-tx-001", "调用 execute", "任务最终为 CONFIRMED，生成 credential/message/receipt/evidence 哈希", "场景法"),
-        make_case("C-007", "跨链-retry", "CONFIRMED 任务 retry 不重复写目标链", "High", "任务已成功执行并有完整哈希", "再次调用 execute 同一 taskId", "连续调用两次 execute", "第二次直接返回确认结果，Fabric 接收方法总共只调用一次", "场景法"),
-        make_case("C-008", "跨链-失败处理", "源链记录缺失时任务转 FAILED", "High", "任务存在但 Fabric 源链查询为空", "CCT-001", "调用 execute", "任务状态为 FAILED，保存错误信息，不调用目标链接收", "等价类"),
-        make_case("C-009", "跨链-核验", "未确认任务不能执行跨链核验", "High", "任务状态为 CREATED", "CCT-001", "调用 verify", "返回 passed=false，记录核验时间和失败原因", "状态转换"),
+        make_case("B-001", "跨链-前置检查", "源链与目标链相同被拒绝", "High", "跨链操作用户已认证", "source=CHINA，target=CHINA", "调用 precheck", "结果 passed=false，包含源链和目标链失败项", "边界值"),
+        make_case("B-002", "跨链-前置检查", "已过期共享请求被拒绝", "High", "运单、文件、源链记录均存在", "expiresAt=当前时间之前", "调用 precheck", "结果 passed=false，有效期合法项失败", "边界值"),
+        make_case("B-003", "跨链-前置检查", "依赖完整且有效期未来时检查通过", "High", "MySQL 运单、文件摘要、源链存证均存在，源链匹配", "source=CHINA，target=EUROPE，expiresAt=未来", "调用 precheck", "8 个检查项全部通过", "场景法"),
+        make_case("B-004", "跨链-任务创建", "前置检查通过后创建 CREATED 任务", "High", "跨链前置检查全部通过，当前用户 id=7", "WB-001，CHINA -> EUROPE，有效期未来", "调用 create", "保存带 CCT-/XCC- 标识、createdBy=7、状态 CREATED 的任务", "场景法"),
+        make_case("B-005", "跨链-任务创建", "前置检查失败时不创建任务", "High", "运单存在但文件和源链记录缺失", "WB-001，CHINA -> EUROPE", "调用 create", "抛出前置检查未通过异常，仓储不保存任务", "等价类"),
+        make_case("B-006", "跨链-执行", "跨链成功执行并确认目标链回执", "High", "任务为 CREATED，源链记录存在，目标链 Mock 返回成功回执", "目标 tx=europe-tx-001", "调用 execute", "任务最终为 CONFIRMED，生成 credential/message/receipt/evidence 哈希", "场景法"),
+        make_case("B-007", "跨链-retry", "CONFIRMED 任务 retry 不重复写目标链", "High", "任务已成功执行并有完整哈希", "再次调用 execute 同一 taskId", "连续调用两次 execute", "第二次直接返回确认结果，Fabric 接收方法总共只调用一次", "场景法"),
+        make_case("B-008", "跨链-失败处理", "源链记录缺失时任务转 FAILED", "High", "任务存在但 Fabric 源链查询为空", "CCT-001", "调用 execute", "任务状态为 FAILED，保存错误信息，不调用目标链接收", "等价类"),
+        make_case("B-009", "跨链-核验", "未确认任务不能执行跨链核验", "High", "任务状态为 CREATED", "CCT-001", "调用 verify", "返回 passed=false，记录核验时间和失败原因", "状态转换"),
     ]
     if len(cases) != 32:
         raise AssertionError(f"expected 32 active cases, got {len(cases)}")
@@ -94,11 +94,11 @@ def build_workbook(template: Path, output: Path) -> None:
     information["E10"] = "待复核"
     information["E11"] = "待审批"
     information["E13"] = f"=COUNTA('{test_sheet.title}'!A2:A{len(data) + 1})"
-    information["B16"] = "本批次采用传统测试方法，当前范围为模块 A 认证与访问控制、模块 C 跨链任务状态控制。模块 B 文件上传与完整性验证暂缓。"
+    information["B16"] = "本批次采用传统测试方法，当前范围为模块 A 认证与访问控制、模块 B 跨链任务状态控制。"
     information["B20"] = "2026.09.13"
     information["C20"] = "1.00"
     information["D20"] = "STP-INIT"
-    information["E20"] = "建立 A+C 测试基线"
+    information["E20"] = "建立 A+B 测试基线"
     information["K20"] = "ZhuJiacheng"
 
     for row in range(2, 2 + len(data)):
