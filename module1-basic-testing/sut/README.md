@@ -7,6 +7,7 @@ The Maven test project compiles `src/main/java` here directly, so the repository
 Snapshot record:
 
 - Source commit observed: `9c2de4f` (`Finalize real Fabric delivery path`)
+- Source working tree: dirty when copied; this snapshot reflects the selected files as they existed in that working tree
 - Snapshot date: 2026-09-13
 - Snapshot size: 51 Java source files
 
