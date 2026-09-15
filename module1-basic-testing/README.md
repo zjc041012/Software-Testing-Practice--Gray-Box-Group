@@ -60,7 +60,7 @@ mvn -version
 
 请保留本模块的完整目录结构，因为 `tests/pom.xml` 引用了相邻的 `sut/src/main/java`。
 
-### Windows PowerShell + WSL（本项目已验证）
+### Windows PowerShell + WSL
 
 下面命令适用于仓库位于 `C:\Projects\Software-Testing-Practice--Gray-Box-Group`、WSL 发行版名为 `Ubuntu-22.04` 的环境；其他路径或发行版请相应替换。
 
@@ -99,16 +99,16 @@ BUILD SUCCESS
 
 执行结果位于 `tests/target/surefire-reports/`，包含 XML 和文本报告。`target/` 不纳入 Git；`clean` 会清除上次构建结果，需要保留的证据应另存。已留档的常规执行日志为 [baseline-32.log](evidence/baseline-32.log)。
 
-## 复现已知缺陷（可选）
+## 已知缺陷修复与回归验证
 
-3 项缺陷均已确认，尚未修复和关闭。它们由独立的 `defect-probes` Maven profile 执行，不计入上述 32 条常规测试的通过率。
+本轮确认的 D-001、D-002、D-003 已在 SUT 快照中修复，并通过独立回归测试。修复前原始日志保存在 `evidence/defect-probes/before/`，修复后日志保存在 `evidence/defect-probes/after/`。三条定向回归不计入上述 32 条常规测试的通过率。
 
-在本模块 `tests/` 的 Bash 终端内，按需运行：
+修复前的故意失败探测脚本仍用于解释历史缺陷现象；在当前已修复 SUT 上运行时，测试通过属于“缺陷未复现”，脚本会按历史探测语义退出失败。需要验证修复时，在本模块 `tests/` 的 Bash 终端内运行：
 
 ```bash
-bash ./run-defect-probe.sh D-001
-bash ./run-defect-probe.sh D-002
-bash ./run-defect-probe.sh D-003
+bash ./run-defect-regression.sh D-001
+bash ./run-defect-regression.sh D-002
+bash ./run-defect-regression.sh D-003
 ```
 
 | 编号 | 缺陷 |
@@ -117,19 +117,21 @@ bash ./run-defect-probe.sh D-003
 | D-002 | Token 在过期秒等于当前秒时仍被接受 |
 | D-003 | 文件哈希为空仍通过跨链前置检查 |
 
-PowerShell 示例（替换最后的缺陷编号可运行其他项）：
+PowerShell 示例：
 
 ```powershell
-wsl.exe -d Ubuntu-22.04 -- bash -lc "cd /mnt/c/Projects/Software-Testing-Practice--Gray-Box-Group/module1-basic-testing/tests && bash ./run-defect-probe.sh D-001"
+wsl.exe -d Ubuntu-22.04 -- bash -lc "cd /mnt/c/Projects/Software-Testing-Practice--Gray-Box-Group/module1-basic-testing/tests && bash ./run-defect-regression.sh D-001"
 ```
 
-缺陷复现预期出现 `Tests run: 1, Failures: 1, Errors: 0` 和 Maven 的 `BUILD FAILURE`；脚本核对预期断言后输出 `EXPECTED_FAILURE_REPRODUCED=D-001` 并以成功状态退出，表示成功复现缺陷。编译失败或环境错误不算复现成功。原始日志写入 `evidence/defect-probes/D-00X.log`，重复运行会覆盖对应已留档日志，请留意 Git 差异。
+修复后回归应出现 `Tests run: 1, Failures: 0, Errors: 0, Skipped: 0` 和 `BUILD SUCCESS`，脚本输出 `REGRESSION_PASSED=D-00X`。修复前的复现日志只作为历史证据保留，不再覆盖。
 
 ## 测试交付物
 
 - [测试用例清单](docs/test-cases.xlsx)
-- [缺陷报告](docs/defect-report.doc)
-- [模块一测试报告](docs/test-report.docx)
+- [缺陷报告（修复后）](docs/defect-report-after-fix.doc)
+- [模块一测试报告（修复后）](docs/test-report-after-fix.docx)
 - [自动化测试工程说明](tests/README.md)
 
-32 条常规用例通过说明其覆盖的路径符合预期；已知缺陷仍存在，因此不能据此认定系统达到发布标准。
+`docs/defect-report.doc` 和 `docs/test-report.docx` 保留为修复前的原始文档副本；修复后的正式版本使用 `*-after-fix` 文件名，未覆盖原文件。
+
+32 条常规用例和 3 条缺陷回归均通过，说明选定范围内的规则符合预期；该结论不外推到本轮未覆盖的文件上传、加密、真实 MySQL/Fabric 集成、性能和渗透测试。

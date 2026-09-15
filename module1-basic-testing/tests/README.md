@@ -22,24 +22,24 @@ Test reports are written to `target/surefire-reports/`. To refresh the snapshot 
 
 The current active test batch covers JWT issue and validation, authentication service decisions, role access control, cross-chain precheck and task state transitions, execution failure handling, verification decisions, and retry idempotency. Fabric is mocked at the service boundary where external network access is not required.
 
-## Reproduce the three open defects
+## Verify the three fixed defects
 
-The intentionally failing probes live in `src/defect-probes/java`. The `defect-probes` Maven profile selects that directory instead of the regular test sources, so `bash run-tests.sh` and plain `mvn clean test` keep running the 32 regular tests.
+The defect regression tests live in `src/defect-probes/java`. The `defect-probes` Maven profile selects that directory instead of the regular test sources, so `bash run-tests.sh` and plain `mvn clean test` keep running the 32 regular tests.
 
 Run one probe at a time from this directory:
 
 ```bash
-bash ./run-defect-probe.sh D-001
-bash ./run-defect-probe.sh D-002
-bash ./run-defect-probe.sh D-003
+bash ./run-defect-regression.sh D-001
+bash ./run-defect-regression.sh D-002
+bash ./run-defect-regression.sh D-003
 ```
 
-Each script run prints the test name and assertion failure, verifies that the failure is the expected defect rather than a build error, and saves the raw Maven output to `../evidence/defect-probes/D-00X.log`. An expected defect failure makes the script exit successfully. These probes use Mockito and do not modify the thesis source, MySQL, or a Fabric network.
+Each regression run prints the observed fixed behavior, requires `Tests run: 1, Failures: 0, Errors: 0, Skipped: 0`, and saves the raw Maven output to `../evidence/defect-probes/after/D-00X.log`. These tests use Mockito and do not modify the thesis source, MySQL, or a Fabric network.
 
-For a terminal screenshot, capture the final `截图摘要` block: it shows the observed value, `Tests run: 1, Failures: 1, Errors: 0`, and `EXPECTED_FAILURE_REPRODUCED`. In Windows, press `Win+Shift+S` and select that block. Keep the original `.log` file as the verifiable evidence; `BUILD FAILURE` in these optional runs is the intentionally failing defect assertion.
+The original defect-reproduction script remains as historical evidence tooling. Its pre-fix logs are stored under `../evidence/defect-probes/before/`; do not use its intentional-failure result as post-fix evidence.
 
-From Windows PowerShell, use this form (replace the final defect ID as needed):
+From Windows PowerShell, use this form:
 
 ```powershell
-wsl.exe -d Ubuntu-22.04 -- bash -lc "cd /mnt/c/Projects/Software-Testing-Practice--Gray-Box-Group/module1-basic-testing/tests && bash ./run-defect-probe.sh D-001"
+wsl.exe -d Ubuntu-22.04 -- bash -lc "cd /mnt/c/Projects/Software-Testing-Practice--Gray-Box-Group/module1-basic-testing/tests && bash ./run-defect-regression.sh D-001"
 ```
