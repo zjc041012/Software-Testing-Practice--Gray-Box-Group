@@ -64,6 +64,33 @@ mvn -version
 
 下面命令适用于仓库位于 `C:\Projects\Software-Testing-Practice--Gray-Box-Group`、WSL 发行版名为 `Ubuntu-22.04` 的环境；其他路径或发行版请相应替换。
 
+#### 进入 Bash 环境
+
+在 PowerShell 中输入：
+
+```powershell
+wsl.exe -d Ubuntu-22.04
+```
+
+看到类似 `用户名@电脑名:~$` 或以 `$` 结尾的提示符，说明已经进入 WSL 的 Bash 环境。进入测试目录并运行测试：
+
+```bash
+cd /mnt/c/Projects/Software-Testing-Practice--Gray-Box-Group/module1-basic-testing/tests
+bash ./run-tests.sh
+```
+
+可以使用下面的命令确认当前 Shell：
+
+```bash
+echo $SHELL
+```
+
+如果显示 `/bin/bash`，就是 Bash 环境；输入 `exit` 可以返回 PowerShell。注意，`PS C:\...>` 是 PowerShell 提示符，不能直接执行 `/mnt/c/...` 形式的 `cd` 命令。
+
+#### 直接从 PowerShell 运行
+
+也可以不手动进入 Bash，在 PowerShell 中直接执行：
+
 ```powershell
 wsl.exe -d Ubuntu-22.04 -- bash -lc "cd /mnt/c/Projects/Software-Testing-Practice--Gray-Box-Group/module1-basic-testing/tests && bash ./run-tests.sh"
 ```
