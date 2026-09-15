@@ -38,7 +38,7 @@ public class JwtService {
             }
             String payload = new String(Base64.getUrlDecoder().decode(parts[0]), StandardCharsets.UTF_8);
             String[] fields = payload.split("\\|");
-            if (fields.length != 4 || Long.parseLong(fields[3]) < Instant.now().getEpochSecond()) {
+            if (fields.length != 4 || Long.parseLong(fields[3]) <= Instant.now().getEpochSecond()) {
                 return Optional.empty();
             }
             return Optional.of(new JwtUser(Long.parseLong(fields[0]), fields[1], Role.valueOf(fields[2])));

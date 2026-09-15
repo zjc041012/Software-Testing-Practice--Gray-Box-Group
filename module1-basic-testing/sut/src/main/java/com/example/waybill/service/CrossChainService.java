@@ -160,8 +160,9 @@ public class CrossChainService {
         }
 
         EncryptedFile file = fileRepository.findFirstByWaybillIdOrderByCreatedAtDesc(request.waybillId()).orElse(null);
-        items.add(new CrossChainCheckItem("文件哈希已生成", file != null,
-                file == null ? "该运单尚未上传文件" : "原文哈希和密文哈希已生成"));
+        boolean hashesReady = file != null && hasText(file.getFileHash()) && hasText(file.getEncryptedFileHash());
+        items.add(new CrossChainCheckItem("文件哈希已生成", hashesReady,
+                file == null ? "该运单尚未上传文件" : hashesReady ? "原文哈希和密文哈希已生成" : "原文哈希或密文哈希缺失"));
 
         try {
             ChainWaybill chainWaybill = fabricGateway.readWaybill(request.sourceChain(), request.waybillId()).orElse(null);
@@ -271,6 +272,19 @@ public class CrossChainService {
                 }
             } else {
                 Map<String, Object> receiptPayload = fabricGateway.receiveCrossChainCredentialMessage(task.getTargetChain(), map(message));
+                if (!isSuccessfulReceipt(receiptPayload)) {
+                    String targetTxId = text(receiptPayload.get("targetTxId"));
+                    if (hasText(targetTxId)) {
+                        task.setTargetTxId(targetTxId);
+                    }
+                    LocalDateTime failedAt = parseTime(text(receiptPayload.get("receivedAt")), LocalDateTime.now());
+                    receipt = buildReceipt(task, receiptPayload, failedAt);
+                    task.setReceiptId(receipt.receiptId());
+                    task.setReceiptHash(receipt.receiptHash());
+                    task.setReceiptSnapshot(json(receipt));
+                    task.setReceiptCreatedAt(LocalDateTime.now());
+                    throw new IllegalStateException(failedReceiptMessage(receiptPayload));
+                }
                 task.setTargetTxId(requiredText(receiptPayload, "targetTxId"));
                 task.setTargetConfirmedAt(LocalDateTime.now());
                 receivedAt = parseTime(text(receiptPayload.get("receivedAt")), task.getTargetConfirmedAt());
@@ -849,6 +863,15 @@ public class CrossChainService {
             throw new IllegalStateException("Fabric 返回结果缺少 " + key);
         }
         return value;
+    }
+
+    private boolean isSuccessfulReceipt(Map<String, Object> payload) {
+        return "SUCCESS".equalsIgnoreCase(text(payload.get("status")));
+    }
+
+    private String failedReceiptMessage(Map<String, Object> payload) {
+        String reason = text(payload.get("failureReason"));
+        return hasText(reason) ? "目标链返回失败：" + reason : "目标链返回失败";
     }
 
     private Map<String, Object> map(Object value) {
