@@ -256,6 +256,9 @@ public class CrossChainService {
             CrossChainReceipt receipt = readReceiptSnapshot(task);
             LocalDateTime receivedAt;
             if (hasText(task.getTargetTxId())) {
+                if (receipt != null && !isSuccessfulReceipt(receipt.status())) {
+                    throw new IllegalStateException(failedReceiptMessage(receipt.failureReason()));
+                }
                 receivedAt = task.getTargetConfirmedAt() == null ? LocalDateTime.now() : task.getTargetConfirmedAt();
                 if (receipt == null || !Objects.equals(receipt.taskId(), task.getTaskId())
                         || !Objects.equals(receipt.credentialHash(), task.getCredentialHash())
@@ -866,11 +869,18 @@ public class CrossChainService {
     }
 
     private boolean isSuccessfulReceipt(Map<String, Object> payload) {
-        return "SUCCESS".equalsIgnoreCase(text(payload.get("status")));
+        return isSuccessfulReceipt(text(payload.get("status")));
+    }
+
+    private boolean isSuccessfulReceipt(String status) {
+        return "SUCCESS".equalsIgnoreCase(text(status));
     }
 
     private String failedReceiptMessage(Map<String, Object> payload) {
-        String reason = text(payload.get("failureReason"));
+        return failedReceiptMessage(text(payload.get("failureReason")));
+    }
+
+    private String failedReceiptMessage(String reason) {
         return hasText(reason) ? "目标链返回失败：" + reason : "目标链返回失败";
     }
 

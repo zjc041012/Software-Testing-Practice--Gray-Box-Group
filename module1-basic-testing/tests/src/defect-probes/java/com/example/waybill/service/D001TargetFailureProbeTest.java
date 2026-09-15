@@ -35,12 +35,18 @@ class D001TargetFailureProbeTest extends CrossChainProbeSupport {
                 .thenReturn(failedReceipt);
 
         CrossChainExecutionResult result = service.execute("CCT-001");
+        CrossChainExecutionResult retryResult = service.execute("CCT-001");
 
         System.out.println("D-001 actualTaskStatus=" + result.task().getStatus()
-                + " actualReceiptStatus=" + result.receipt().status());
+                + " actualReceiptStatus=" + result.receipt().status()
+                + " retryTaskStatus=" + retryResult.task().getStatus());
         assertThat(result.receipt().status()).isEqualTo("FAILED");
         assertThat(result.task().getStatus())
                 .as("D-001 failed target receipt must not confirm the task")
                 .isEqualTo(CrossChainTaskStatus.FAILED);
+        assertThat(retryResult.task().getStatus())
+                .as("D-001 retry must not promote a failed receipt to confirmation")
+                .isEqualTo(CrossChainTaskStatus.FAILED);
+        assertThat(retryResult.receipt().status()).isEqualTo("FAILED");
     }
 }
