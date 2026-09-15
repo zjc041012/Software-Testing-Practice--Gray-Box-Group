@@ -128,10 +128,10 @@ wsl.exe -d Ubuntu-22.04 -- bash -lc "cd /mnt/c/Projects/Software-Testing-Practic
 ## 测试交付物
 
 - [测试用例清单](docs/test-cases.xlsx)
-- [缺陷报告（修复后）](docs/defect-report-after-fix.doc)
-- [模块一测试报告（修复后）](docs/test-report-after-fix.docx)
+- [缺陷报告](docs/defect-report.doc)
+- [模块一测试报告](docs/test-report.docx)
 - [自动化测试工程说明](tests/README.md)
 
-`docs/defect-report.doc` 和 `docs/test-report.docx` 保留为修复前的原始文档副本；修复后的正式版本使用 `*-after-fix` 文件名，未覆盖原文件。
+仓库中的缺陷报告和测试报告均为修复、回归验证后的正式版本；修复前的过程证据保存在 `evidence/defect-probes/before/`，原始报告文件已从当前工作目录移除，但仍可从 Git 历史恢复。
 
 32 条常规用例和 3 条缺陷回归均通过，说明选定范围内的规则符合预期；该结论不外推到本轮未覆盖的文件上传、加密、真实 MySQL/Fabric 集成、性能和渗透测试。
