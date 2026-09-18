@@ -1,0 +1,13 @@
+{
+  "model_name": "qwen2.5:1.5b",
+  "framework": "Ollama",
+  "version": "0.34.0",
+  "deployment": "local",
+  "api_endpoint": "http://localhost:11434/api/chat",
+  "model_source": "https://ollama.com/library/qwen2.5",
+  "pull_command": "ollama pull qwen2.5:1.5b",
+  "size": "约 1GB",
+  "task_type": "text-generation",
+  "input_spec": "自然语言提示词",
+  "output_spec": "自然语言文本"
+}
