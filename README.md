@@ -158,7 +158,7 @@ FIX_MODE=on python -m pytest tests/ -v
 | 测试报告 | [Word · V1.2](module1-basic-testing/docs/测试报告_模块一_V1.2.docx) | [Word](module2-ai-integration/docs/测试报告_模块二.docx) |
 | 自动化测试源代码 | [JUnit 工程](module1-basic-testing/tests/) + [SUT](module1-basic-testing/sut/) | [pytest 用例](module2-ai-integration/tests/) + [模型封装](module2-ai-integration/sut/) + [提示词数据](module2-ai-integration/test-data/prompts.json) |
 | 执行证据 | [日志与缺陷证据](module1-basic-testing/evidence/) | [截图与检测日志](module2-ai-integration/evidence/) |
-| 成果汇报 | [模块一 PPT](module1-basic-testing/presentation/软件测试模块一ppt.pptx) | [模块二 PPT（含嵌入视频）](module2-ai-integration/presentation/软件测试模块二ppt.pptx) |
+| 成果汇报 | [模块一 PPT (含视频)](module1-basic-testing/presentation/软件测试模块一ppt.pptx) | [模块二 PPT（含视频）](module2-ai-integration/presentation/软件测试模块二ppt.pptx) |
 | AI 辅助记录 | — | [AI 对话记录](module2-ai-integration/ai-records/AI对话记录.md) |
 
 模块二演示视频已嵌入 PPT，请下载后在支持视频播放的演示软件中查看。当前仓库没有独立的视频文件。
