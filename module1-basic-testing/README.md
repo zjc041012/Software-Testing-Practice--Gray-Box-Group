@@ -154,9 +154,9 @@ wsl.exe -d Ubuntu-22.04 -- bash -lc "cd /mnt/c/Projects/Software-Testing-Practic
 
 ## 测试交付物
 
-- [测试用例清单](docs/test-cases.xlsx)
-- [缺陷报告](docs/defect-report.doc)
-- [模块一测试报告](docs/test-report.docx)
+- [测试用例清单](docs/测试用例清单_模块一.xlsx)
+- [缺陷报告（V1.2）](docs/缺陷报告_模块一_V1.2.doc)
+- [模块一测试报告（V1.2）](docs/测试报告_模块一_V1.2.docx)
 - [自动化测试工程说明](tests/README.md)
 
 仓库中的缺陷报告和测试报告均为修复、回归验证后的正式版本；修复前的过程证据保存在 `evidence/defect-probes/before/`，原始报告文件已从当前工作目录移除，但仍可从 Git 历史恢复。
